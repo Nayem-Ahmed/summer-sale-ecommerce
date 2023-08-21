@@ -1,5 +1,6 @@
 let subTotal = 0;
 let discount = 0;
+let total = 0;
 
 function pickPrice(card) {
     const cardPrice = parseFloat(card.querySelector(".productPrice").innerText);
@@ -62,6 +63,7 @@ const purchaseButton = document.getElementById("purchaseButton")
 if(subTotal >= 200){
     purchaseButton.removeAttribute("disable")
 }
+
 
 
 
