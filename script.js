@@ -3,7 +3,8 @@ let discount = 0;
 let total = 0;
 const discountPrice = document.getElementById("discount-price");
 const totalPrice = document.getElementById("total-price");
-const Total = document.getElementById("total");
+const totalElement = document.getElementById("total");
+
 const couponInput = document.getElementById("couponInput");
 const applyCouponButton = document.getElementById("applyCouponButton");
 
@@ -12,8 +13,6 @@ function pickPrice(card) {
     subTotal += cardPrice;
     
     totalPrice.innerText = subTotal.toFixed(2);
-    total = (subTotal - discount).toFixed(2);
-    totalPrice.innerText = total;
 
     if (subTotal > 200) {
         applyCouponButton.removeAttribute("disabled");
@@ -24,24 +23,36 @@ function pickPrice(card) {
     // ...
 }
 
-applyCouponButton.addEventListener("click", applyCoupon);
 
-function applyCoupon() {
+
+
+// function applyCoupon() {
+//     if (couponInput.value === "SELL200") {
+//         discount = (subTotal * 0.2);
+//         discountPrice.innerText = discount.toFixed(2);
+//         const totalWithDiscount = subTotal - discount; 
+//         totalPrice.innerText = totalWithDiscount.toFixed(2);
+//         couponInput.value = "";
+//     }
+// }
+
+applyCouponButton.addEventListener("click",function(){
     if (couponInput.value === "SELL200") {
-        discount = (subTotal * 0.2);
+        discount = (subTotal * 20) / 100;
         discountPrice.innerText = discount.toFixed(2);
-        const totalWithDiscount = subTotal - discount; 
-        totalPrice.innerText = totalWithDiscount.toFixed(2);
+        total = (subTotal - discount).toFixed(2); 
+        totalElement.innerText = total;
         couponInput.value = "";
     }
-}
+
+});
 
 const modal = document.getElementById("close-modal");
 modal.addEventListener("click", function() {
-    subTotal = 0;
-    discount = 0;
-    totalPrice.innerText = subTotal.toFixed(2);
-    discountPrice.innerText = discount.toFixed(2);
+   
+    totalPrice.innerText = (10 - 10).toFixed(2);
+    discountPrice.innerText = (10 - 10).toFixed(2);
+    totalElement.innerText = (10 - 10).toFixed(2);
     ol.innerHTML = "";
 });
 
