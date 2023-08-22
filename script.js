@@ -1,69 +1,49 @@
 let subTotal = 0;
 let discount = 0;
 let total = 0;
+const discountPrice = document.getElementById("discount-price");
+const totalPrice = document.getElementById("total-price");
+const Total = document.getElementById("total");
+const couponInput = document.getElementById("couponInput");
+const applyCouponButton = document.getElementById("applyCouponButton");
 
 function pickPrice(card) {
     const cardPrice = parseFloat(card.querySelector(".productPrice").innerText);
     subTotal += cardPrice;
-
-    const totalPriceElement = document.getElementById("total-price");
-    totalPriceElement.innerText = subTotal.toFixed(2);
-
-    if (subTotal >= 200) {
-        discount = (subTotal * 20) / 100;
-        const discountPriceElement = document.getElementById("discount-price");
-        discountPriceElement.innerText = discount.toFixed(2);
-    } else {
-        discount = 0;
-        const discountPriceElement = document.getElementById("discount-price");
-        discountPriceElement.innerText = "0.00";
-    }
-
-    const finalTotalElement = document.getElementById("final-total");
-    const finalTotal = (subTotal - discount).toFixed(2);
-    finalTotalElement.innerText = finalTotal;
-
-    const purchaseButton = document.getElementById("purchaseButton");
-    purchaseButton.disabled = !(subTotal >= 200);
     
-    // Add product title to the list
-    const ol = document.getElementById("show-list");
-    const cardTitle = card.querySelector(".card-title").innerText;
-    const listItem = document.createElement("li");
-    listItem.textContent = cardTitle;
-    ol.appendChild(listItem);
+    totalPrice.innerText = subTotal.toFixed(2);
+    total = (subTotal - discount).toFixed(2);
+    totalPrice.innerText = total;
+
+    if (subTotal > 200) {
+        applyCouponButton.removeAttribute("disabled");
+    }  
+    // ...  
+    const purchaseButton = document.getElementById("purchaseButton");
+    purchaseButton.disabled = !(subTotal >= 200); 
+    // ...
 }
-// SELL200
-const applyCouponButton = document.getElementById("applyCouponButton");
+
 applyCouponButton.addEventListener("click", applyCoupon);
 
 function applyCoupon() {
-    const couponInput = document.getElementById("couponInput");
-    const discountPrice = document.getElementById("discount-price");
-    const totalPrice = document.getElementById("total-price");
+    if (couponInput.value === "SELL200") {
+        discount = (subTotal * 0.2);
+        discountPrice.innerText = discount.toFixed(2);
+        const totalWithDiscount = subTotal - discount; 
+        totalPrice.innerText = totalWithDiscount.toFixed(2);
+        couponInput.value = "";
+    }
+}
 
-   if(couponInput.value === "SELL200"){
-    discount = (subTotal * 20) /100;
+const modal = document.getElementById("close-modal");
+modal.addEventListener("click", function() {
+    subTotal = 0;
+    discount = 0;
+    totalPrice.innerText = subTotal.toFixed(2);
     discountPrice.innerText = discount.toFixed(2);
-    total = (subTotal - discount).toFixed(2);
-    totalPrice.innerText = total;
-    couponInput.value = " ";
-
-
-   }
-
-    
-}
-//
-if(subTotal > 0){
-    applyCouponButton.removeAttribute("disable")
-}
-// 
-const purchaseButton = document.getElementById("purchaseButton")
-if(subTotal >= 200){
-    purchaseButton.removeAttribute("disable")
-}
-
+    ol.innerHTML = "";
+});
 
 
 
